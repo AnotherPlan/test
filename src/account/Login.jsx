@@ -2,6 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { Formik, Field, Form, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
+import axios from 'axios'
 
 import { accountService, alertService } from '@/_services';
 
@@ -20,7 +21,7 @@ function Login({ history, location }) {
 
     function onSubmit({ email, password }, { setSubmitting }) {
         alertService.clear();
-        accountService.login(email, password)
+        accountService.login(email, password, '111.111.111.111')
             .then(() => {
                 const { from } = location.state || { from: { pathname: "/" } };
                 history.push(from);
@@ -38,7 +39,7 @@ function Login({ history, location }) {
                     <h3 className="card-header">Login</h3>
                     <div className="card-body">
                         <div className="form-group">
-                            <label>Email</label>
+                            <label>Email2</label>
                             <Field name="email" type="text" className={'form-control' + (errors.email && touched.email ? ' is-invalid' : '')} />
                             <ErrorMessage name="email" component="div" className="invalid-feedback" />
                         </div>

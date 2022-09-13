@@ -17,6 +17,7 @@ export const accountService = {
     resetPassword,
     getAll,
     getById,
+    getOtpById,
     create,
     update,
     delete: _delete,
@@ -26,11 +27,34 @@ export const accountService = {
 
 function login(email, password) {
     return fetchWrapper.post(`${baseUrl}/authenticate`, { email, password })
+    console.log(user)
         .then(user => {
             // publish user to subscribers and start timer to refresh token
-            userSubject.next(user);
-            startRefreshTokenTimer();
-            return user;
+            alert(user.otp.use);
+            if(!user.otp.use)
+            {
+                userSubject.next(user);
+                startRefreshTokenTimer();
+                return user;
+            } else {
+                return user;
+            }
+        });
+}
+
+function loginotp(email, code) {
+    return fetchWrapper.post(`${baseUrl}/authenticateotp`, { email, password })
+        .then(user => {
+            // publish user to subscribers and start timer to refresh token
+            alert(user.otp.use);
+            if(!user.otp.use)
+            {
+                userSubject.next(user);
+                startRefreshTokenTimer();
+                return user;
+            } else {
+                return user;
+            }
         });
 }
 
@@ -79,7 +103,9 @@ function getAll() {
 function getById(id) {
     return fetchWrapper.get(`${baseUrl}/${id}`);
 }
-
+function getOtpById(id) {
+    return fetchWrapper.get(`${baseUrl}/otp`, `${id}`);
+}
 function create(params) {
     return fetchWrapper.post(baseUrl, params);
 }

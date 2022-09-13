@@ -30,12 +30,13 @@ module.exports = {
         template: './src/index.html'
     })],
     devServer: {
-        historyApiFallback: true
+        allowedHosts: ['.la-bit.com'],
+        historyApiFallback: true     
     },
     externals: {
         // global app config object
         config: JSON.stringify({
-            apiUrl: 'http://localhost:4000'
+            apiUrl: 'https://api.la-bit.com'
         })
     }
 }
